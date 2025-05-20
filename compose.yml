@@ -1,27 +1,23 @@
+version: "3.9"
+
 services:
   frontend:
-    build:
-      context: ./frontend
-      dockerfile: Dockerfile
+    build: ./frontend
     ports:
       - "3000:3000"
-    # ホスト側コードだけをマウント。node_modules はイメージ内のまま保持。
     volumes:
-      - ./frontend:/app:delegated
-    working_dir: /app
-    # コンテナ起動時に依存を補完したいなら下記を使ってもOK
-    # command: sh -c "npm install && npm start"
-    command: npm start
+      # ソースだけを双方向同期
+      - ./frontend:/app
+      # 依存はコンテナ内部 (匿名ボリューム) に閉じ込める
+      - /app/node_modules
     environment:
       - NODE_ENV=development
+    command: npm start
 
   functions:
-    build:
-      context: ./functions
-      dockerfile: Dockerfile
+    build: ./functions
     ports:
-      - "5001:5001"    # Firebase Functions の場合などあれば
+      - "5001:5001"
     volumes:
-      - ./functions:/usr/src/app:delegated
-    working_dir: /usr/src/app
+      - ./functions:/usr/src/app
     command: npm run serve
