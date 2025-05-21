@@ -1,19 +1,22 @@
-/**
- * Import function triggers from their respective submodules:
- *
- * import {onCall} from "firebase-functions/v2/https";
- * import {onDocumentWritten} from "firebase-functions/v2/firestore";
- *
- * See a full list of supported triggers at https://firebase.google.com/docs/functions
- */
+// functions/src/index.ts
+import * as functions from "firebase-functions/v1";
+import * as admin     from "firebase-admin";
 
-import {onRequest} from "firebase-functions/v2/https";
-import * as logger from "firebase-functions/logger";
+admin.initializeApp();
+const db = admin.firestore();
 
-// Start writing functions
-// https://firebase.google.com/docs/functions/typescript
+export const addQuestionId = functions.firestore
+.document("questions/{docId}")
+.onCreate(async (snap, context) => {
+    // counters/questions ドキュメントをトランザクションでインクリメント
+    const counterRef = db.collection("counters").doc("questions");
+    await db.runTransaction(async (tx) => {
+        const counterDoc = await tx.get(counterRef);
+        const current = counterDoc.data()?.count ?? 0;
+        const next    = current + 1;
+        const formattedId = "#" + String(next).padStart(4, "0");
 
-// export const helloWorld = onRequest((request, response) => {
-//   logger.info("Hello logs!", {structuredData: true});
-//   response.send("Hello from Firebase!");
-// });
+        tx.update(counterRef, { count: next });
+        tx.update(snap.ref,  { questionId: formattedId });
+    });
+});
