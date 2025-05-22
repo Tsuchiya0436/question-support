@@ -25,9 +25,11 @@ export default function AdminDashboard() {
       })) as Question[];
 
       // questionIdの数値部分で降順ソート
-      const sorted = list.sort((a, b) =>
-        parseInt(b.questionId.replace("#", "")) - parseInt(a.questionId.replace("#", ""))
-      );
+      const sorted = list.sort((a, b) => {
+      const aId = a.questionId ? parseInt(a.questionId.replace("#", "")) : 0;
+      const bId = b.questionId ? parseInt(b.questionId.replace("#", "")) : 0;
+      return bId - aId;
+    });
 
       setQuestions(sorted);
     });

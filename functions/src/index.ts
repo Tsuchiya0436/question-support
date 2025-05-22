@@ -20,3 +20,4 @@ export const addQuestionId = functions.firestore
 
 export { sendQuestionConfirmation } from "./sendQuestionConfirmation";
 export { categorizeQuestion }       from "./categorizeQuestion";
+export { sendReplyNotification } from "./sendReplyNotification";

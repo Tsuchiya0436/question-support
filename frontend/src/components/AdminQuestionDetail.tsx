@@ -14,6 +14,7 @@ interface QuestionData {
   name: string;
   faculty: string;
   grade: string;
+  studentId: string
   email: string;
   questionText: string;
   topic: string;
@@ -74,7 +75,12 @@ export default function AdminQuestionDetail() {
   return (
     <div className="p-6 max-w-2xl mx-auto space-y-4">
       <h1 className="text-xl font-bold">質問詳細</h1>
-      <p><strong>名前:</strong> {data.name}</p>
+      <p>
+        <strong>名前:</strong> {data.name}
+        {data.grade !== "教職員" && data.studentId && (
+          <> ({data.studentId})</>
+        )}
+      </p>
       <p><strong>学科:</strong> {data.faculty}</p>
       <p><strong>学年:</strong> {data.grade}</p>
       <p><strong>カテゴリ:</strong> {data.topic}</p>
@@ -96,21 +102,21 @@ export default function AdminQuestionDetail() {
       />
 
       {data.status !== "replied" && (
-        <button
-          onClick={handleSubmit}
-          className="bg-blue-600 text-white px-4 py-2 rounded"
-        >
-          回答を送信する
-        </button>
-      )}
-        <div className="flex justify-center">
+        <div className="flex justify-center space-x-4">
           <button
             onClick={() => navigate("/admin/dashboard")}
             className="bg-gray-500 text-white px-4 py-2 rounded"
           >
             戻る
           </button>
+          <button
+            onClick={handleSubmit}
+            className="bg-blue-600 text-white px-4 py-2 rounded"
+          >
+            回答を送信する
+          </button>
         </div>
+      )}
     </div>
   );
 }
