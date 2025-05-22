@@ -23,7 +23,7 @@ ${after.name}さん
 以下のご質問に対して、サポートデスクより回答いたします。
 
 ▼ ご質問ID
-#${context.params.questionId}
+${after.questionId}
 
 ▼ ご質問
 ${after.questionText}
@@ -36,7 +36,7 @@ ${after.reply}
 もし回答が不十分な場合は、再度フォームからご質問ください。
 その際、質問文の最初に以下のように質問IDを記入してください：
 
-#${context.params.questionId}
+${after.questionId}
 （ここに再質問内容を続けて記入）
 
 ---
