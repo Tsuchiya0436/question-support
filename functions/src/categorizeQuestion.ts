@@ -55,7 +55,6 @@ export const categorizeQuestion = functions.firestore
       );
 
       // パースする前にステータスと生のテキストを確認
-      // (ポートフォリオ提出時には、以下の2行のlogはコメントアウトまたは削除しても良いかもしれません)
       console.log("API Response Status:", res.status);
       const rawText = await res.text();
       console.log("API Raw Response Text:", rawText);
