@@ -27,6 +27,7 @@ interface FormData {
 	grade: string;
 	email: string;
 	questionText: string;
+	studentId: string;
 }
 
 export default function QuestionForm() {
@@ -36,6 +37,7 @@ export default function QuestionForm() {
 		grade: "",
 		email: "",
 		questionText: "",
+		studentId: "",
 	});
 
 	const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
@@ -52,6 +54,15 @@ export default function QuestionForm() {
 
 	const handleSubmit = async (e?: FormEvent) => {
 		if (e) e.preventDefault();
+
+		// 教職員以外で学籍番号未入力ならエラー
+		if (
+			formData.grade !== "教職員" &&
+			formData.studentId.trim() === ""
+		) {
+			alert("学生の場合は学籍番号を入力してください")
+			return;
+		}
 		await addDoc(collection(db, "questions"), {
 			...formData,
 			status: "pending",
@@ -64,6 +75,7 @@ export default function QuestionForm() {
 			grade: "",
 			email: "",
 			questionText: "",
+			studentId: "",
 		});
 		setIsModalOpen(false);
 	};
@@ -113,6 +125,15 @@ export default function QuestionForm() {
 			</select>
 
 			<input
+				name="studentId"
+				placeholder="学籍番号（教職員の方は入力不要です）"
+				value={formData.studentId}
+				onChange={handleChange}
+				className="w-full border p-2"
+				required={formData.grade !== "教職員"}
+			/>
+
+			<input
 				name="email"
 				type="email"
 				placeholder="返信可能メールアドレス"
@@ -160,6 +181,9 @@ export default function QuestionForm() {
 						</p>
 						<p>
 							<strong>学年:</strong> {formData.grade}
+						</p>
+						<p>
+							<strong>学籍番号:</strong> {formData.studentId || "（教職員のため未入力）"}
 						</p>
 						<p>
 							<strong>メール:</strong> {formData.email}

@@ -31,7 +31,7 @@ ${data.questionText}
 
     try {
       await sgMail.send(msg);
-      console.log("確認メール送信成功！");
+      console.log("確認メール送信成功");
     } catch (error) {
       console.error("メール送信失敗:", error);
     }
