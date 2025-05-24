@@ -12,12 +12,12 @@ import { useAuth } from "../AuthContext";
 export default function LoginPage() {
   const { user, loading } = useAuth();
   const auth = getAuth();
-  const db   = getFirestore();
+  const db = getFirestore();
 
-  /* Firestore で検証した結果を保持 */
+  // Firestore で検証した結果を保持
   const [isAdmin, setIsAdmin] = useState<boolean | null>(null);
 
-  /* ── 既ログインユーザーの権限チェック ── */
+  /* user オブジェクトが来たら権限チェック */
   useEffect(() => {
     if (!user) {
       setIsAdmin(null);
@@ -25,25 +25,25 @@ export default function LoginPage() {
     }
     (async () => {
       const snap = await getDoc(doc(db, "allowedAdmins", user.email!));
-      const ok   = snap.exists();
-      setIsAdmin(ok);
-      if (!ok) await signOut(auth); // 不正なら即退場
+      setIsAdmin(snap.exists());
+      if (!snap.exists()) await signOut(auth); // 不正なら直ちにサインアウト
     })();
   }, [user, db, auth]);
 
-  /* ローディング中は描画しない */
+  /* ローディング処理 */
   if (loading || (user && isAdmin === null)) return null;
 
-  /* 管理者ならダッシュボードへ */
-  if (user && isAdmin) return <Navigate to="/admin/dashboard" replace />;
+  /* 正規管理者ならダッシュボードへ */
+  if (user && isAdmin) {
+    return <Navigate to="/admin/dashboard" replace />;
+  }
 
-  /* ── 未ログイン時の UI ── */
+  /* サインイン UI */
   const handleLogin = async () => {
     try {
       const provider = new GoogleAuthProvider();
       provider.setCustomParameters({ prompt: "select_account" });
       const { user } = await signInWithPopup(auth, provider);
-
       const snap = await getDoc(doc(db, "allowedAdmins", user.email!));
       if (!snap.exists()) {
         alert("許可された管理者アカウントではありません");
@@ -61,7 +61,7 @@ export default function LoginPage() {
         onClick={handleLogin}
         className="bg-blue-600 text-white px-6 py-3 rounded shadow"
       >
-        大学&nbsp;Google&nbsp;アカウントでログイン
+        大学 Google アカウントでログイン
       </button>
     </div>
   );
