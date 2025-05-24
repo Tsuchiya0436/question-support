@@ -92,142 +92,145 @@ export default function QuestionForm() {
 
   /* --- JSX --- */
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="mt-10 mx-4 sm:mx-auto sm:max-w-md p-4 sm:p-6 bg-white rounded-lg shadow space-y-4"
-    >
-      {/* 名前 */}
-      <input
-        name="name"
-        placeholder="名前（仮名可）"
-        value={formData.name}
-        onChange={handleChange}
-        className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
-        required
-      />
+	<div>
+		<h1 className="text-xl sm:text-2xl font-bold text-center mt-8">質問フォーム</h1>
+		<form
+		onSubmit={handleSubmit}
+		className="mt-10 mx-4 sm:mx-auto sm:max-w-md p-4 sm:p-6 bg-white rounded-lg shadow space-y-4"
+		>
+		{/* 名前 */}
+		<input
+			name="name"
+			placeholder="名前（仮名可）"
+			value={formData.name}
+			onChange={handleChange}
+			className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
+			required
+		/>
 
-      {/* 学科 */}
-      <select
-        name="faculty"
-        value={formData.faculty}
-        onChange={handleChange}
-        className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
-        required
-      >
-        <option value="">学部名を選択</option>
-        {faculties.map((f) => (
-          <option key={f}>{f}</option>
-        ))}
-      </select>
+		{/* 学科 */}
+		<select
+			name="faculty"
+			value={formData.faculty}
+			onChange={handleChange}
+			className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
+			required
+		>
+			<option value="">学部名を選択</option>
+			{faculties.map((f) => (
+			<option key={f}>{f}</option>
+			))}
+		</select>
 
-      {/* 学年 */}
-      <select
-        name="grade"
-        value={formData.grade}
-        onChange={handleChange}
-        className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
-        required
-      >
-        <option value="">学年を選択</option>
-        {grades.map((g) => (
-          <option key={g}>{g}</option>
-        ))}
-      </select>
+		{/* 学年 */}
+		<select
+			name="grade"
+			value={formData.grade}
+			onChange={handleChange}
+			className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
+			required
+		>
+			<option value="">学年を選択</option>
+			{grades.map((g) => (
+			<option key={g}>{g}</option>
+			))}
+		</select>
 
-      {/* 学籍番号 */}
-      <input
-        name="studentId"
-        placeholder="学籍番号（教職員は不要）"
-        value={formData.studentId}
-        onChange={handleChange}
-        className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
-        required={formData.grade !== "教職員"}
-      />
+		{/* 学籍番号 */}
+		<input
+			name="studentId"
+			placeholder="学籍番号（教職員は不要）"
+			value={formData.studentId}
+			onChange={handleChange}
+			className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
+			required={formData.grade !== "教職員"}
+		/>
 
-      {/* メール */}
-      <input
-        name="email"
-        type="email"
-        placeholder="返信用メールアドレス"
-        value={formData.email}
-        onChange={handleChange}
-        className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
-        required
-      />
+		{/* メール */}
+		<input
+			name="email"
+			type="email"
+			placeholder="返信用メールアドレス"
+			value={formData.email}
+			onChange={handleChange}
+			className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
+			required
+		/>
 
-      {/* 質問内容 */}
-      <textarea
-        name="questionText"
-        placeholder="質問内容（自由記述）"
-        value={formData.questionText}
-        onChange={handleChange}
-        rows={10}
-        className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
-        required
-      />
+		{/* 質問内容 */}
+		<textarea
+			name="questionText"
+			placeholder="質問内容（自由記述）"
+			value={formData.questionText}
+			onChange={handleChange}
+			rows={10}
+			className="w-full border p-3 sm:p-2 text-sm sm:text-base rounded"
+			required
+		/>
 
-      {/* ボタン */}
-      <div className="sm:flex sm:space-x-4">
-        <button
-          type="button"
-          onClick={() => setIsModalOpen(true)}
-          className="w-full sm:w-auto mb-2 sm:mb-0 bg-gray-500 text-white px-4 py-3 rounded"
-        >
-          確認
-        </button>
-        <button
-          type="submit"
-          className="w-full sm:w-auto bg-blue-600 text-white px-4 py-3 rounded"
-        >
-          送信
-        </button>
-      </div>
+		{/* ボタン */}
+		<div className="sm:flex sm:justify-center sm:space-x-4">
+			<button
+			type="button"
+			onClick={() => setIsModalOpen(true)}
+			className="w-full sm:w-auto mb-2 sm:mb-0 bg-gray-500 text-white px-4 py-3 rounded"
+			>
+			確認
+			</button>
+			<button
+			type="submit"
+			className="w-full sm:w-auto bg-blue-600 text-white px-4 py-3 rounded"
+			>
+			送信
+			</button>
+		</div>
 
-      {/* モーダル */}
-      {isModalOpen && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
-          <div className="bg-white max-w-md w-full p-4 sm:p-6 rounded shadow space-y-3">
-            <h2 className="text-lg font-bold">入力内容の確認</h2>
+		{/* モーダル */}
+		{isModalOpen && (
+			<div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 px-4">
+			<div className="bg-white max-w-md w-full p-4 sm:p-6 rounded shadow space-y-3">
+				<h2 className="text-lg font-bold">入力内容の確認</h2>
 
-            <p>
-              <strong>名前:</strong> {formData.name}
-            </p>
-            <p>
-              <strong>学科:</strong> {formData.faculty}
-            </p>
-            <p>
-              <strong>学年:</strong> {formData.grade}
-            </p>
-            <p>
-              <strong>学籍番号:</strong>{" "}
-              {formData.studentId || "（教職員のため未入力）"}
-            </p>
-            <p>
-              <strong>メール:</strong> {formData.email}
-            </p>
-            <p className="whitespace-pre-line">
-              <strong>質問内容:</strong>
-              <br />
-              {formData.questionText}
-            </p>
+				<p>
+				<strong>名前:</strong> {formData.name}
+				</p>
+				<p>
+				<strong>学科:</strong> {formData.faculty}
+				</p>
+				<p>
+				<strong>学年:</strong> {formData.grade}
+				</p>
+				<p>
+				<strong>学籍番号:</strong>{" "}
+				{formData.studentId || "（教職員のため未入力）"}
+				</p>
+				<p>
+				<strong>メール:</strong> {formData.email}
+				</p>
+				<p className="whitespace-pre-line">
+				<strong>質問内容:</strong>
+				<br />
+				{formData.questionText}
+				</p>
 
-            <div className="sm:flex sm:space-x-4">
-              <button
-                onClick={() => setIsModalOpen(false)}
-                className="w-full sm:w-auto mb-2 sm:mb-0 bg-gray-400 text-white px-4 py-3 rounded"
-              >
-                戻る
-              </button>
-              <button
-                onClick={handleSubmit}
-                className="w-full sm:w-auto bg-blue-600 text-white px-4 py-3 rounded"
-              >
-                送信する
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-    </form>
+				<div className="sm:flex sm:space-x-4">
+				<button
+					onClick={() => setIsModalOpen(false)}
+					className="w-full sm:w-auto mb-2 sm:mb-0 bg-gray-400 text-white px-4 py-3 rounded"
+				>
+					戻る
+				</button>
+				<button
+					onClick={handleSubmit}
+					className="w-full sm:w-auto bg-blue-600 text-white px-4 py-3 rounded"
+				>
+					送信する
+				</button>
+				</div>
+			</div>
+			</div>
+		)}
+		</form>
+	</div>
   );
 }
