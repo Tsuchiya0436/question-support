@@ -1,4 +1,3 @@
-// src/components/AdminQuestionDetail.tsx
 import { useEffect, useState } from "react";
 import { useParams, useNavigate, Navigate } from "react-router-dom";
 import {
@@ -37,7 +36,7 @@ export default function AdminQuestionDetail() {
   const [data, setData]               = useState<QuestionData | null>(null);
   const [replyText, setReplyText]     = useState("");
 
-  /* ① Firestore で権限チェック */
+  /* Firestore で権限チェック */
   useEffect(() => {
     if (!user) { setIsAdmin(null); return; }
     (async () => {
@@ -46,7 +45,7 @@ export default function AdminQuestionDetail() {
     })();
   }, [user, db]);
 
-  /* ② 質問ドキュメント取得 */
+  /* 質問ドキュメント取得 */
   useEffect(() => {
     if (!id || !isAdmin) return;
     (async () => {
@@ -64,7 +63,7 @@ export default function AdminQuestionDetail() {
   if (!user || !isAdmin)           return <Navigate to="/login" replace />;
   if (!data)                       return <div className="p-4">読み込み中...</div>;
 
-  /* ③ 回答送信 */
+  /* 回答送信 */
   const handleSubmit = async () => {
     await updateDoc(doc(db, "questions", id!), {
       reply: replyText,
@@ -121,22 +120,25 @@ export default function AdminQuestionDetail() {
       />
 
       {/* ボタン */}
-      {data.status !== "replied" && (
-        <div className="sm:flex sm:space-x-4">
-          <button
-            onClick={() => navigate("/admin/dashboard")}
-            className="w-full sm:w-auto mb-2 sm:mb-0 bg-gray-500 text-white px-4 py-3 rounded"
-          >
-            戻る
-          </button>
+      <div className='sm:flex sm:justify-center sm:space-x-4'>
+        {/* 戻るボタンは常に表示 */}
+        <button
+          onClick={() => navigate('/admin/dashboard')}
+          className="w-full sm:w-auto mb-2 sm:mb-0 bg-gray-500 text-white px-4 py-3 rounded"
+        >
+          戻る
+        </button>
+
+        {/* 未対応の時のみ送信するボタンを表示 */}
+        {data.status !== "replied" && (
           <button
             onClick={handleSubmit}
             className="w-full sm:w-auto bg-blue-600 text-white px-4 py-3 rounded"
           >
             回答を送信する
           </button>
-        </div>
-      )}
+        )}
+      </div>
     </div>
   );
 }
