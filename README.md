@@ -6,7 +6,6 @@
 
 - 質問フォーム（学年・名前・学籍番号・メールアドレス付き）
 - Geminiを利用した質問内容の自動カテゴリ分類
-- Firebase Functionsによる投稿制限・BAN判定（DoS対策含む）
 - Firestoreによるデータ管理（質問、投稿者、匿名アーカイブ）
 - 管理者ダッシュボード（認証付き）
 - 回答プレビュー・送信（sendGrid APIを使用）
@@ -59,12 +58,11 @@ frontend ディレクトリのルートに .env ファイルを作成し、Fireb
 
 (例: frontend/.env)
 
-コード スニペット
-
 # Create React Appでは、環境変数の頭に REACT_APP_ を付ける必要があります
 ```bash
 REACT_APP_FIREBASE_API_KEY="your_api_key"
 REACT_APP_FIREBASE_AUTH_DOMAIN="your_auth_domain"
+REACT_APP_PROJECT_ID=question-support
 ```
 
 バックエンド (Firebase Functions)
