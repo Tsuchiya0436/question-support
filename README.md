@@ -30,8 +30,8 @@
 実際の大学業務において活用可能な質問管理・支援システムを、LLM（大規模言語モデル）およびFirebaseを中心としたサーバーレス技術により構築。インフラ・認証・通知・ログ管理・自動化などをすべてフルスタックで設計・開発しています。
 
 ## アプリケーションURL
-[質問フォーム](https://question-support.web.app/)
-[管理者画面](https://question-support.web.app/login)
+- [質問フォーム](https://question-support.web.app/)
+- [管理者画面](https://question-support.web.app/login)
 
 ## ログイン情報
 本アプリケーションの管理者機能は、Google認証を利用し、許可されたゼミ生（回答者）のみがアクセスできる仕様となっております。
